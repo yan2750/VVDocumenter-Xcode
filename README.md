@@ -23,13 +23,23 @@ If you want to use other text beside of `///` to trigger the document insertion,
 
 ## Xcode version?
 
-This plug-in is supported in Xcode 5 and 6 (current beta). From Xcode 5, Apple added a UUID-verification to all plugins to ensure the stability when Xcode gets updated. The value of `DVTPlugInCompatibilityUUIDs` in project plist should contains current UUID of Xcode version, or the plugin does not work. Once you update your Xcode, the plugin might be disabled and you should check the newest version and built it again.
+This plug-in is supported in Xcode 5, 6 and 7. From Xcode 5, Apple added a UUID-verification to all plugins to ensure the stability when Xcode gets updated. The value of `DVTPlugInCompatibilityUUIDs` in project plist should contains current UUID of Xcode version, or the plugin does not work. And from Xcode 6.3, you will be prompt to "Load third party bundle" if you are using a plugin. You should always select "Load bundles" to enable this plugin.
+
+All plugins will be disabled once you update your Xcode, since the supported UUIDs in the plugins do not contain the one. You should try to clean your plugins folder (`~/Library/Application Support/Developer/Shared/Xcode/Plug-ins` by default) and clone/build the latest version from master branch. If you happened to skip the bundle loading, you can use this to reset the prompt:
+
+```bash
+defaults delete com.apple.dt.Xcode DVTPlugInManagerNonApplePlugIns-Xcode-{your_xcode_version}
+```
+
+**Please do not open an issue if this plugin not work in your newly updated Xcode.** Pull request for new `DVTPlugInCompatibilityUUIDs` is welcome, and if UUID of your Xcode version is already there, please try to reinstall the plugin from a clean state.
 
 The default deployment target is 10.8. If you want to use it in a earlier OS version, you should change OS X Deployment Target (in project info setting) to your system version.
 
 ## Swift Support
 
-Yes, this plugin supports documentation for Swift now. Check [this post](http://nshipster.com/swift-documentation/) from @mattt to see how to write the documentation for swift. By using `VVDocumenter-Xcode`, you can just type `///` to make the magic happen.
+Yes, this plugin supports documentation for Swift 2 now. Check [this post](http://ericasadun.com/2015/06/14/swift-header-documentation-in-xcode-7/) to see how to write the documentation for swift. By using `VVDocumenter-Xcode`, you can just type `///` to make the magic happen.
+
+The documentation format changed from Swift 1.x to 2. If you are using Swift 1.x, you could build from branch [Xcode6](https://github.com/onevcat/VVDocumenter-Xcode/tree/Xcode6) to get the support for the earlier format.
 
 ## Limitations and Future
 
@@ -44,23 +54,4 @@ If you have modified these two shortcuts in your Xcode, the newset version of th
 
 ## License
 
-VVDocumenter is published under MIT License
-
-    Copyright (c) 2014 Wei Wang (@onevcat)
-    
-    Permission is hereby granted, free of charge, to any person obtaining a copy of
-    this software and associated documentation files (the "Software"), to deal in
-    the Software without restriction, including without limitation the rights to use,
-    copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
-    Software, and to permit persons to whom the Software is furnished to do so,
-    subject to the following conditions:
-    
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+VVDocumenter is published under MIT License. See the LICENSE file for more.
